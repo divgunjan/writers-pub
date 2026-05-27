@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { api } from "@/lib/api";
 import { setSession, isAuthenticated } from "@/lib/auth";
 import { InkButton } from "@/components/ui/InkButton";
@@ -16,8 +16,8 @@ interface LoginResponse {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("eleanor@writerspub.com");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,6 +57,8 @@ export default function LoginPage() {
         <form onSubmit={onSubmit} className="space-y-4">
           <input
             type="email"
+            name="email"
+            autoComplete="username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -66,6 +68,8 @@ export default function LoginPage() {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -89,7 +93,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-xs text-center opacity-60">
-          New here? <Link href="/signup" className="underline">Create an account</Link>
+          New here? <link href="/signup" className="underline">Create an account</link>
         </p>
       </GlassCard>
     </main>
